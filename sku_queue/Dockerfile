@@ -5,4 +5,5 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-CMD python launch.py
+EXPOSE 5000
+CMD [ "python", "./main.py", "--host=0.0.0.0" ]

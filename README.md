@@ -28,3 +28,5 @@ Initially, interfacing with https://www.tcgplayer.com/ (TCG)'s API for "Magic: T
   3. Docker setup for `update_pricing`
   4. instructions on how to run `update_pricing` w & w/o Docker (think about setup while developing a new feature/troubleshooting)
   5. sku_queue: `This is a development server. Do not use it in a production deployment.`
+  6. How can I run `update_pricing` if `sku_queue` is not active? OR ... how can I bypass the call for SKU if env=dev?
+  7. DB indexing? on which attributes?

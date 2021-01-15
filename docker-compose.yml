@@ -5,6 +5,16 @@ services:
     env_file:
         - ./.env
     image: tcg_core
+  sku_queue:
+    build:
+      context: ./sku_queue/
+      dockerfile: Dockerfile
+    extends:
+      service: core
+    image: tcg_sku_queue
+    ports:
+      - '5000:5000'
+    tty: true
   update_pricing:
     build:
       context: ./update_pricing/

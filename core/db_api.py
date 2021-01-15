@@ -3,6 +3,7 @@ load_dotenv()
 
 import os
 import psycopg2
+import requests
 
 # NOTE: connection/methods for Google Cloud PostgreSQL instance
 class DbApi:
@@ -25,6 +26,9 @@ class DbApi:
     rows = cur.fetchall()
     conn.close()
     return rows[0]
+
+  def request_sku(self):
+    return requests.request('GET', 'http://sku_queue:5000/tcg_sku').json()
 
   def query_all_sku(self):
     self.un_updated_skus = []
