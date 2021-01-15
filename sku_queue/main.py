@@ -2,6 +2,7 @@
 import atexit
 from apscheduler.scheduler import Scheduler
 from flask import Flask, jsonify
+import logging
 
 #  NOTE: from core
 import sys
@@ -39,6 +40,9 @@ def tcg_sku():
     return jsonify('Anyong!')
 
 if __name__ == '__main__':
+  log = logging.getLogger('werkzeug')
+  log.disabled = True
+
   # NOTE: use if running w/o Docker
   # app.run()
   # NOTE: use with Docker

@@ -17,6 +17,7 @@ Initially, interfacing with https://www.tcgplayer.com/ (TCG)'s API for "Magic: T
   0. root cli: `pip install -r requirements.txt`
   1. Docker (all):
      - `docker-compose build`, `docker-compose up`
+     - multiple? `docker-compose up --scale update_pricing=10`
   2. individual app (typical; exceptions exist):
      - navigate to app directory
      - cli: `python launch.py`
