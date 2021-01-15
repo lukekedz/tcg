@@ -1,0 +1,15 @@
+version: '3.9'  # optional since v1.27.0
+services:
+  core:
+    build: .
+    env_file:
+        - ./.env
+    image: tcg_core
+  update_pricing:
+    build:
+      context: ./update_pricing/
+      dockerfile: Dockerfile
+    extends:
+      service: core
+    image: tcg_update_pricing
+    tty: true
