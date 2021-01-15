@@ -6,7 +6,10 @@ import psycopg2
 
 # NOTE: connection/methods for Google Cloud PostgreSQL instance
 class DbApi:
-  def conn(self):
+  def __init__(self):
+    self.un_updated_skus = []
+
+  def connection(self):
     return psycopg2.connect(
       host = os.getenv('DEV_DB_HOST'),
       database = os.getenv('DEV_DB_NAME'),
@@ -14,14 +17,32 @@ class DbApi:
       password = os.getenv('DEV_DB_PW')
     )
 
-  def find(self, conn, sku):
+  def find(self, sku):
+    conn = self.connection()
     cur = conn.cursor()
     cur.execute('SELECT * FROM card_prices WHERE sku = {}'.format(sku))
+    
     rows = cur.fetchall()
+    conn.close()
     return rows[0]
 
-  def update(self, conn, sku, pricing):
+  def query_all_sku(self):
+    self.un_updated_skus = []
+    conn = self.connection()
+
     cur = conn.cursor()
+    cur.execute('SELECT sku FROM card_prices')
+    rows = cur.fetchall()
+    conn.close()
+
+    for sku in rows:
+      sku = int(''.join(map(str, sku)))
+      self.un_updated_skus.append(sku)
+
+  def update(self, sku, pricing):
+    conn = self.connection()
+    cur = conn.cursor()
+
     if pricing:
       cur.execute('''
         UPDATE card_prices
@@ -29,3 +50,4 @@ class DbApi:
         WHERE sku = {sku}
       '''.format(sku=sku, low=pricing[0], market=pricing[1], direct=pricing[2]))
       conn.commit()
+    conn.close()
