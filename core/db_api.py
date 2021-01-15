@@ -13,3 +13,19 @@ class DbApi:
       user = os.getenv('DEV_DB_USER'),
       password = os.getenv('DEV_DB_PW')
     )
+
+  def find(self, conn, sku):
+    cur = conn.cursor()
+    cur.execute('SELECT * FROM card_prices WHERE sku = {}'.format(sku))
+    rows = cur.fetchall()
+    return rows[0]
+
+  def update(self, conn, sku, pricing):
+    cur = conn.cursor()
+    if pricing:
+      cur.execute('''
+        UPDATE card_prices
+        SET low = {low}, market = {market}, direct = {direct}, updated_at = NOW()
+        WHERE sku = {sku}
+      '''.format(sku=sku, low=pricing[0], market=pricing[1], direct=pricing[2]))
+      conn.commit()
