@@ -18,9 +18,8 @@ tcg_api = tcg_api.TcgApi()
 
 def update_pricing():
   print('')
-  print('New Interval!')
   entry = datetime.now().strftime("%H:%M:%S")
-  print(entry)
+  print(f"New Interval: {entry}")
 
   sku = db_api.request_sku()
   while sku != 'Anyong!':
@@ -29,13 +28,13 @@ def update_pricing():
     # NOTE: and repeat
     sku = db_api.request_sku()
 
-  exit = datetime.now().strftime("%H:%M:%S")
-  print(exit)
+  exit_time = datetime.now().strftime("%H:%M:%S")
+  print(f"Fin: {exit_time}")
   print('')
 
 update_pricing()
 
-schedule.every(15).minutes.do(update_pricing)
+schedule.every(10).minutes.do(update_pricing)
 while 1:
     schedule.run_pending()
     time.sleep(1)
