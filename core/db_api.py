@@ -12,10 +12,10 @@ class DbApi:
 
   def connection(self):
     return psycopg2.connect(
-      host = os.getenv('DEV_DB_HOST'),
-      database = os.getenv('DEV_DB_NAME'),
-      user = os.getenv('DEV_DB_USER'),
-      password = os.getenv('DEV_DB_PW')
+      host = os.getenv(f"{os.getenv('ENV')}_DB_HOST"),
+      database = os.getenv(f"{os.getenv('ENV')}_DB_NAME"),
+      user = os.getenv(f"{os.getenv('ENV')}_DB_USER"),
+      password = os.getenv(f"{os.getenv('ENV')}_DB_PW")
     )
 
   def find(self, sku):
