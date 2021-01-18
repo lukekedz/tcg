@@ -47,11 +47,16 @@ class DbApi:
     conn = self.connection()
     cur = conn.cursor()
 
-    if pricing:
-      cur.execute('''
-        UPDATE card_prices
-        SET low = {low}, market = {market}, direct = {direct}, updated_at = NOW()
-        WHERE sku = {sku}
-      '''.format(sku=sku, low=pricing[0], market=pricing[1], direct=pricing[2]))
-      conn.commit()
-    conn.close()
+    try:
+      if pricing:
+        cur.execute('''
+          UPDATE card_prices
+          SET low = {low}, market = {market}, direct = {direct}, updated_at = NOW()
+          WHERE sku = {sku}
+        '''.format(sku=sku, low=pricing[0], market=pricing[1], direct=pricing[2]))
+        conn.commit()
+      conn.close()
+    except:
+      print("Unexpected error:", sys.exc_info()[0])
+      print(sku)
+      print(pricing)

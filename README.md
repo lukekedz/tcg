@@ -31,3 +31,4 @@ Initially, interfacing with https://www.tcgplayer.com/ (TCG)'s API for "Magic: T
   - How can I run `update_pricing` if `sku_queue` is not active? OR ... how can I bypass the call for SKU if env=dev?
   - DB indexing? on which attributes?
   - testing... how can I run a test and/or a report to determine success for updating 65K+ records?
+  - Postman/endpt on hourly run - how many records processed so far?
