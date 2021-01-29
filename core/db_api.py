@@ -48,7 +48,7 @@ class DbApi:
       sku = int(''.join(map(str, sku)))
       self.un_updated_skus.append(sku)
 
-  def update(self, sku, pricing):
+  def update(self, sku, pricing, bl_high):
     try:
       conn = self.connection()
       cur = conn.cursor()
@@ -60,9 +60,9 @@ class DbApi:
       if pricing:
         cur.execute('''
           UPDATE card_prices
-          SET low = {low}, market = {market}, direct = {direct}, updated_at = NOW()
+          SET low = {low}, market = {market}, direct = {direct}, bl_high = {bl_high}, updated_at = NOW()
           WHERE sku = {sku}
-        '''.format(sku=sku, low=pricing[0], market=pricing[1], direct=pricing[2]))
+        '''.format(sku=sku, low=pricing[0], market=pricing[1], direct=pricing[2], bl_high=bl_high))
         conn.commit()
       conn.close()
     except:

@@ -26,7 +26,8 @@ def update_pricing():
   sku = db_api.request_sku()
   while sku != 'Anyong!':
     pricing = tcg_api.request_pricing(sku)
-    db_api.update(sku, pricing)
+    bl_high = tcg_api.public_bl_high(sku)
+    db_api.update(sku, pricing, bl_high)
     sku = db_api.request_sku()
 
   exit_time = datetime.now()
