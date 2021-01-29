@@ -4,6 +4,7 @@ load_dotenv()
 import os
 import psycopg2
 import requests
+import sys
 
 # NOTE: connection/methods for Google Cloud PostgreSQL instance
 class DbApi:
@@ -28,7 +29,11 @@ class DbApi:
     return rows[0]
 
   def request_sku(self):
-    return requests.request('GET', 'http://sku_queue:5000/tcg_sku').json()
+    try:
+      return requests.request('GET', 'http://sku_queue:5000/tcg_sku').json()
+    except:
+      print('')
+      print("#request_sku error:", sys.exc_info()[0])
 
   def query_all_sku(self):
     self.un_updated_skus = []
@@ -44,8 +49,12 @@ class DbApi:
       self.un_updated_skus.append(sku)
 
   def update(self, sku, pricing):
-    conn = self.connection()
-    cur = conn.cursor()
+    try:
+      conn = self.connection()
+      cur = conn.cursor()
+    except:
+      print('')
+      print("#update connection error:", sys.exc_info()[0])
 
     try:
       if pricing:
@@ -57,6 +66,6 @@ class DbApi:
         conn.commit()
       conn.close()
     except:
-      print("Unexpected error:", sys.exc_info()[0])
-      print(sku)
-      print(pricing)
+      print('')
+      print("#update execute error:", sys.exc_info()[0])
+ 

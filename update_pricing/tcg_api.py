@@ -3,6 +3,8 @@ load_dotenv()
 
 import os
 import requests
+import time
+from random import randrange
 
 # NOTE: connection/methods for https://www.tcgplayer.com/
 class TcgApi:
@@ -11,13 +13,24 @@ class TcgApi:
 
   def request_pricing(self, sku):
     url = TcgApi.PRICING_URL + str(sku)
-    response = requests.request('GET', url, headers = TcgApi.HEADERS).json()
-    
+    response = None
+
+    try:
+      response = requests.request('GET', url, headers = TcgApi.HEADERS).json()
+    except requests.exceptions.ConnectionError:
+      print('TcgApi timeout')
+      time.sleep(randrange(5))
+      self.request_pricing(sku)
+    except urllib3.exceptions.MaxRetryError:
+      print('TcgApi max retries')
+      time.sleep(60)
+      self.request_pricing(sku)
+
     # TODO: handle errors; response just comes back empty
     # NOTE: example
     # { "success": false, "errors": [ "Missing or invalid bearer token." ], "results": [] }
     
-    if response['results']:
+    if response and response['results']:
       result = response['results'][0]
       low = 'null' if result['lowPrice'] is None else result['lowPrice'] 
       market = 'null' if result['marketPrice'] is None else result['marketPrice']

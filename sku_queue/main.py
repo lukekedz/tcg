@@ -13,12 +13,12 @@ db_api = db_api.DbApi()
 # NOTE: initial run
 db_api.query_all_sku()
 
-# NOTE: #query_all_sku scheduled every hour
-cron = Scheduler(daemon=True)
-cron.start()
-@cron.interval_schedule(hours = 1)
-def job_function():
-    db_api.query_all_sku()
+# NOTE: #query_all_sku for repeat runs
+# cron = Scheduler(daemon=True)
+# cron.start()
+# @cron.interval_schedule(hours = 12)
+# def job_function():
+    # db_api.query_all_sku()
 
 # NOTE: cron shutdown if the web process is stopped
 atexit.register(lambda: cron.shutdown(wait=False))
