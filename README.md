@@ -32,3 +32,8 @@ Initially, interfacing with https://www.tcgplayer.com/ (TCG)'s API for "Magic: T
   - DB indexing? on which attributes?
   - testing... how can I run a test and/or a report to determine success for updating 65K+ records?
   - Postman/endpt on hourly run - how many records processed so far?
+
+### TODO (2/13/21):
+  1. primary key: sku & date
+  2. index on: sku, date, primary key
+  3. spin up Production DB

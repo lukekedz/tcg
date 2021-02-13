@@ -27,7 +27,7 @@ for i in range(sheet.nrows):
   skus.append(int(sheet.cell_value(i, 0)))
 
 for sku in skus:
-  # print(sku)
+  print(sku)
   create(conn, sku)
 
 conn.close()

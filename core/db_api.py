@@ -64,6 +64,9 @@ class DbApi:
           WHERE sku = {sku}
         '''.format(sku=sku, low=pricing[0], market=pricing[1], direct=pricing[2], bl_high=bl_high))
         conn.commit()
+
+      print('')
+      print(f"updating sku: {sku}")
       conn.close()
     except:
       print('')
