@@ -18,9 +18,7 @@ class TcgApi:
 
     if response and response['results'] and response['results'][0]['prices']:
       result = response['results'][0]['prices']
-
-      bl_high = 'null' if result['high'] is None else result['high']
-      return bl_high
+      return result['high']
 
   def request_pricing(self, sku):
     url = TcgApi.PRICING_URL + str(sku)
@@ -32,7 +30,4 @@ class TcgApi:
     # { "success": false, "errors": [ "Missing or invalid bearer token." ], "results": [] }
     if response and response['results']:
       result = response['results'][0]
-      low = 'null' if result['lowPrice'] is None else result['lowPrice'] 
-      market = 'null' if result['marketPrice'] is None else result['marketPrice']
-      direct = 'null' if result['directLowPrice'] is None else result['directLowPrice']
-      return [low, market, direct]
+      return [result['lowPrice'] , result['marketPrice'], result['directLowPrice']]
