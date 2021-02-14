@@ -1,19 +1,11 @@
-# NOTE: manual import/write of static list of SKUs from Excel
+# NOTE: one-time manual import/write of static list of SKUs from Excel
 # NOTE: run `python launch.py` from this directory
 
 import sys
 sys.path.append('../core')
 import db_api
+import multiprocessing
 import xlrd
-
-db_api = db_api.DbApi()
-conn = db_api.connection()
-
-# TODO: move to ./core ?
-def create(conn, sku):
-  cur = conn.cursor()
-  cur.execute('INSERT INTO card_prices (sku, created_at, updated_at) VALUES ({}, NOW(), NOW()) ON CONFLICT DO NOTHING'.format(sku))
-  conn.commit()
 
 # NOTE: c/o for environment choice
 # file_path = '../excel/dev_SKUs.xls'
@@ -26,8 +18,18 @@ skus = []
 for i in range(sheet.nrows):
   skus.append(int(sheet.cell_value(i, 0)))
 
-for sku in skus:
-  print(sku)
-  create(conn, sku)
+# TODO: refactor; not best practice
+DB_API = db_api.DbApi()
 
-conn.close()
+def create(sku):
+  conn = DB_API.connection()
+  cur = conn.cursor()
+  cur.execute('INSERT INTO sku_list (created_at, updated_at, sku) VALUES (NOW(), NOW(), {}) ON CONFLICT DO NOTHING'.format(sku))
+  conn.commit()
+  conn.close()
+
+def process_skus(skus):
+  with multiprocessing.Pool() as pool:
+    pool.map(create, skus)
+
+process_skus(skus)

@@ -7,4 +7,6 @@
 > [instance] [date] [file]: [explanation]
 
 ### Activity
-+ `development` 01152021 `card_prices_initial_01152021.sql`: base attributes established
++ `development` 20210213 `card_prices_initial_01152021.sql`: base attributes established
++ `both` 20210214: `card_prices_initial` file name updated (permanently) for Production run
++ `production` 20210214 `sku_list_initial_20210214.sql`: prime sku list established on AWS
