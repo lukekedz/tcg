@@ -3,8 +3,6 @@ load_dotenv()
 
 import os
 import requests
-import time
-from random import randrange
 
 # NOTE: connection/methods for https://www.tcgplayer.com/
 class TcgApi:
@@ -16,17 +14,7 @@ class TcgApi:
   def public_bl_high(self, sku):
     url = TcgApi.BL_HIGH_URL + str(sku)
     response = None
-
-    try:
-      response = requests.request('GET', url, headers = TcgApi.HEADERS).json()
-    except requests.exceptions.ConnectionError:
-      print('#public_bl_high TcgApi timeout')
-      time.sleep(randrange(5))
-      self.request_pricing(sku)
-    except urllib3.exceptions.MaxRetryError:
-      print('#public_bl_high TcgApi max retries')
-      time.sleep(60)
-      self.request_pricing(sku)
+    response = requests.request('GET', url, headers = TcgApi.HEADERS).json()
 
     if response and response['results'] and response['results'][0]['prices']:
       result = response['results'][0]['prices']
@@ -37,22 +25,11 @@ class TcgApi:
   def request_pricing(self, sku):
     url = TcgApi.PRICING_URL + str(sku)
     response = None
-
-    try:
-      response = requests.request('GET', url, headers = TcgApi.HEADERS).json()
-    except requests.exceptions.ConnectionError:
-      print('#request_pricing TcgApi timeout')
-      time.sleep(randrange(5))
-      self.request_pricing(sku)
-    except urllib3.exceptions.MaxRetryError:
-      print('#request_pricing TcgApi max retries')
-      time.sleep(60)
-      self.request_pricing(sku)
+    response = requests.request('GET', url, headers = TcgApi.HEADERS).json()
 
     # TODO: handle errors; response just comes back empty
     # NOTE: example
     # { "success": false, "errors": [ "Missing or invalid bearer token." ], "results": [] }
-    
     if response and response['results']:
       result = response['results'][0]
       low = 'null' if result['lowPrice'] is None else result['lowPrice'] 
