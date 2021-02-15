@@ -8,6 +8,5 @@ CREATE TABLE IF NOT EXISTS card_prices (
   updated_at TIMESTAMP NOT NULL,
 
   sku INTEGER NOT NULL,
-  cpkey VARCHAR(20),
-  PRIMARY KEY(created_at, sku)
+  cpkey VARCHAR(20)
 )

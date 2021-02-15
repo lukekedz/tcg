@@ -1,0 +1,1 @@
+CREATE UNIQUE INDEX cpkey_idx ON card_prices (cpkey)
