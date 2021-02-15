@@ -27,7 +27,7 @@ print('')
 def create_record(sku):
   pricing = tcg_api.request_pricing(sku)
   bl_high = tcg_api.public_bl_high(sku)
-  cpkey = db_api.readable_cpkey(sku)
+  cpkey = db_api.assemble_cpkey(sku)
   print(sku, cpkey, end="\r")
   db_api.create(sku, cpkey, pricing, bl_high)
 
@@ -37,6 +37,7 @@ def process_skus(skus):
 
 process_skus(skus)
 exit_time = datetime.now()
+print('')
 print(f"Finished! {exit_time.strftime('%H:%M:%S').rjust(11)}")
 print(f"{str(exit_time - entry).rjust(27)}")
 print('')
