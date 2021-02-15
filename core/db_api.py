@@ -17,6 +17,11 @@ class DbApi:
       password = os.getenv(f"{os.getenv('ENV')}_DB_PW")
     )
 
+  def assemble_cpkey(self, sku):
+    today_str = datetime.now().strftime('%Y%m%d')
+    cpkey = today_str + '_' + str(sku)
+    return cpkey
+
   # TODO: is there a better way to write execute statement ...
   # TODO: & potentially eliminate simple syntac errors ?
   def create(self, sku, cpkey, pricing, bl_high):
@@ -33,11 +38,6 @@ class DbApi:
       print('')
       print("#create error:", sys.exc_info()[0])
       print(sku, cpkey, pricing, bl_high)
-
-  def readable_cpkey(self, sku):
-    today_str = datetime.now().strftime('%Y%m%d')
-    readable_cpk_key = today_str + '_' + str(sku)
-    return readable_cpk_key
 
   # NOTE: not currently in use
   # def find(self, sku):
