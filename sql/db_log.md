@@ -11,5 +11,5 @@
 + `both` 20210214: `card_prices_initial` file name updated (permanently) for Production run
 + `production` 20210214 `sku_list_initial_20210214.sql`: prime sku list established on AWS
 + `production` 20210215 `card_prices_initial_20210215.sql`: base attributes established on AWS
-+ `production` 20210215 `card_prices_sku_index_20210215.sql`: index created on sku
++ `production` 20210215 `card_prices_sku_index_20210215.sql`: index created on sku (dropped unique)
 + `production` 20210215 `card_prices_cpkey_index_20210215.sql`: index created on cpkey
