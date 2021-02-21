@@ -34,6 +34,7 @@ Initially, interfacing with https://www.tcgplayer.com/ (TCG)'s API for "Magic: T
   - instructions on how to run `update_pricing` w/ & w/o Docker (think about setup while developing a new feature/troubleshooting)
   - testing... how can I run a test and/or a report to determine success for updating 65K+ records?
   - now, not using docker-compose. clean up repo to reflect (& update Running cmds)
+  - do I need update_pricing/requirements.txt now?
 
 ### HOTLIST:
   0. automate so running daily w/o manual launch (on cron job)
